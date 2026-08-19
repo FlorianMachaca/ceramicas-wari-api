@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.Proveedor;
 import com.florian.ceramicaswari.service.ProveedorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/proveedores")
+@Tag(
+        name = "Proveedores",
+        description = "Gestión de proveedores de materiales e insumos"
+)
 public class ProveedorController {
 
     private final ProveedorService proveedorService;

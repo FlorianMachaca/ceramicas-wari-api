@@ -2,15 +2,20 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.DetallePedido;
 import com.florian.ceramicaswari.service.DetallePedidoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/detalles-pedido")
+@Tag(
+        name = "Detalles de pedido",
+        description = "Gestión de productos y cantidades asociados a los pedidos"
+)
 public class DetallePedidoController {
 
     private final DetallePedidoService detallePedidoService;
@@ -27,68 +32,76 @@ public class DetallePedidoController {
         return detallePedidoService.listarDetalles();
     }
 
-    // BUSCAR DETALLES DE UN PEDIDO
-    @GetMapping("/pedido/{idPedido}")
-    public List<DetallePedido> buscarDetallesPorPedido(
-            @PathVariable Integer idPedido
-    ) {
-        return detallePedidoService.buscarPorPedido(idPedido);
-    }
-
-    // BUSCAR DETALLES DE UN PRODUCTO
-    @GetMapping("/producto/{idProducto}")
-    public List<DetallePedido> buscarDetallesPorProducto(
-            @PathVariable Integer idProducto
-    ) {
-        return detallePedidoService.buscarPorProducto(idProducto);
-    }
-
     // BUSCAR DETALLE POR ID
     @GetMapping("/{id}")
-    public ResponseEntity<DetallePedido> buscarDetallePorId(
+    public ResponseEntity<DetallePedido> buscarPorId(
             @PathVariable Integer id
     ) {
+
         DetallePedido detalle =
                 detallePedidoService.obtenerPorId(id);
 
         return ResponseEntity.ok(detalle);
     }
 
-    // CREAR DETALLE
-    @PostMapping
-    public ResponseEntity<DetallePedido> crearDetalle(
-            @Valid @RequestBody DetallePedido detalle
+    // BUSCAR DETALLES POR PEDIDO
+    @GetMapping("/pedido/{idPedido}")
+    public List<DetallePedido> buscarPorPedido(
+            @PathVariable Integer idPedido
     ) {
-        DetallePedido nuevoDetalle =
-                detallePedidoService.crearDetalle(detalle);
 
-        return ResponseEntity
-        .status(HttpStatus.CREATED)
-        .body(nuevoDetalle);
+        return detallePedidoService.buscarPorPedido(idPedido);
     }
 
-    // ACTUALIZAR DETALLE
+    // BUSCAR DETALLES POR PRODUCTO
+    @GetMapping("/producto/{idProducto}")
+    public List<DetallePedido> buscarPorProducto(
+            @PathVariable Integer idProducto
+    ) {
+
+        return detallePedidoService.buscarPorProducto(idProducto);
+    }
+
+    // CREAR DETALLE -> 201 CREATED
+    @PostMapping
+    public ResponseEntity<DetallePedido> crearDetalle(
+            @Valid @RequestBody DetallePedido detallePedido
+    ) {
+
+        DetallePedido nuevoDetalle =
+                detallePedidoService.crearDetalle(detallePedido);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(nuevoDetalle);
+    }
+
+    // ACTUALIZAR DETALLE -> 200 OK
     @PutMapping("/{id}")
     public ResponseEntity<DetallePedido> actualizarDetalle(
             @PathVariable Integer id,
-            @Valid @RequestBody DetallePedido detalle
+            @Valid @RequestBody DetallePedido detallePedido
     ) {
+
         DetallePedido detalleActualizado =
                 detallePedidoService.actualizarDetalle(
                         id,
-                        detalle
+                        detallePedido
                 );
 
         return ResponseEntity.ok(detalleActualizado);
     }
 
-    // ELIMINAR DETALLE
+    // ELIMINAR DETALLE -> 204 NO CONTENT
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarDetalle(
             @PathVariable Integer id
     ) {
+
         detallePedidoService.eliminarDetalle(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

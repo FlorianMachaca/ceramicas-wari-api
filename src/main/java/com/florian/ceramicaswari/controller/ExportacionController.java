@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.Exportacion;
 import com.florian.ceramicaswari.service.ExportacionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/exportaciones")
+@Tag(
+        name = "Exportaciones",
+        description = "Gestión de despachos, seguimiento y estados de exportación"
+)
 public class ExportacionController {
 
     private final ExportacionService exportacionService;

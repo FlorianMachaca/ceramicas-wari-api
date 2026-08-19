@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.Pedido;
 import com.florian.ceramicaswari.service.PedidoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pedidos")
+@Tag(
+        name = "Pedidos",
+        description = "Gestión de pedidos realizados por los clientes"
+)
 public class PedidoController {
 
     private final PedidoService pedidoService;
@@ -30,7 +35,8 @@ public class PedidoController {
     public ResponseEntity<Pedido> buscarPedidoPorId(
             @PathVariable Integer id) {
 
-        Pedido pedido = pedidoService.obtenerPorId(id);
+        Pedido pedido =
+                pedidoService.obtenerPorId(id);
 
         return ResponseEntity.ok(pedido);
     }
@@ -71,7 +77,10 @@ public class PedidoController {
             @Valid @RequestBody Pedido pedido) {
 
         Pedido pedidoActualizado =
-                pedidoService.actualizarPedido(id, pedido);
+                pedidoService.actualizarPedido(
+                        id,
+                        pedido
+                );
 
         return ResponseEntity.ok(pedidoActualizado);
     }

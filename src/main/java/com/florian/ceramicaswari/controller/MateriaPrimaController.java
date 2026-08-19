@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.MateriaPrima;
 import com.florian.ceramicaswari.service.MateriaPrimaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/materias-primas")
+@Tag(
+        name = "Materias primas",
+        description = "Gestión de materiales, proveedores y control de stock"
+)
 public class MateriaPrimaController {
 
     private final MateriaPrimaService materiaPrimaService;
@@ -57,7 +62,7 @@ public class MateriaPrimaController {
         return materiaPrimaService.buscarPorProveedor(idProveedor);
     }
 
-    // LISTAR MATERIAS PRIMAS CON STOCK BAJO
+    // BUSCAR MATERIAS PRIMAS CON STOCK BAJO
     @GetMapping("/stock-bajo")
     public List<MateriaPrima> listarStockBajo() {
 

@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.Producto;
 import com.florian.ceramicaswari.service.ProductoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/productos")
+@Tag(
+        name = "Productos",
+        description = "Gestión de productos artesanales"
+)
 public class ProductoController {
 
     private final ProductoService productoService;
@@ -62,7 +67,6 @@ public class ProductoController {
             @PathVariable Integer id,
             @Valid @RequestBody Producto producto) {
 
-        // Verifica que exista; si no, devuelve 404
         productoService.obtenerPorId(id);
 
         producto.setIdProducto(id);
@@ -78,7 +82,6 @@ public class ProductoController {
     public ResponseEntity<Void> eliminarProducto(
             @PathVariable Integer id) {
 
-        // Verifica que exista antes de eliminar
         productoService.obtenerPorId(id);
 
         productoService.eliminarProducto(id);

@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.Cliente;
 import com.florian.ceramicaswari.service.ClienteService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
+@Tag(
+        name = "Clientes",
+        description = "Gestión de clientes nacionales e internacionales"
+)
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -30,7 +35,8 @@ public class ClienteController {
     public ResponseEntity<Cliente> buscarClientePorId(
             @PathVariable Integer id) {
 
-        Cliente cliente = clienteService.obtenerPorId(id);
+        Cliente cliente =
+                clienteService.obtenerPorId(id);
 
         return ResponseEntity.ok(cliente);
     }
@@ -64,7 +70,6 @@ public class ClienteController {
             @PathVariable Integer id,
             @Valid @RequestBody Cliente cliente) {
 
-        // Verifica que exista
         clienteService.obtenerPorId(id);
 
         cliente.setIdCliente(id);

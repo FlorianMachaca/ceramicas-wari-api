@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.Artesano;
 import com.florian.ceramicaswari.service.ArtesanoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/artesanos")
+@Tag(
+        name = "Artesanos",
+        description = "Gestión de artesanos responsables de la producción"
+)
 public class ArtesanoController {
 
     private final ArtesanoService artesanoService;

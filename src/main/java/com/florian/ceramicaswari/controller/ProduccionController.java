@@ -2,6 +2,7 @@ package com.florian.ceramicaswari.controller;
 
 import com.florian.ceramicaswari.model.Produccion;
 import com.florian.ceramicaswari.service.ProduccionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/producciones")
+@Tag(
+        name = "Producción",
+        description = "Gestión del proceso de producción de piezas artesanales"
+)
 public class ProduccionController {
 
     private final ProduccionService produccionService;
