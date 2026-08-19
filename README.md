@@ -576,6 +576,47 @@ http://localhost:8080/api/productos
 
 ---
 
+# 📘 Swagger / OpenAPI
+
+La API incluye documentación interactiva generada con **Swagger UI** y **OpenAPI**.
+
+Con la aplicación ejecutándose, la documentación está disponible en:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+
+También puede consultarse la especificación OpenAPI en formato JSON mediante:
+
+```text
+http://localhost:8080/v3/api-docs
+```
+
+Desde Swagger UI es posible:
+
+- Visualizar todos los endpoints disponibles.
+- Consultar parámetros y estructuras de datos.
+- Ejecutar peticiones `GET`, `POST`, `PUT` y `DELETE`.
+- Revisar los modelos utilizados por la API.
+- Probar la API directamente desde el navegador.
+
+Los endpoints se encuentran organizados por módulos:
+
+```text
+Artesanos
+Clientes
+Detalles de pedido
+Exportaciones
+Materias primas
+Pagos
+Pedidos
+Producción
+Productos
+Proveedores
+```
+
+---
+
 # 📂 Estructura del proyecto
 
 ```text
