@@ -1,5 +1,6 @@
 package com.florian.ceramicaswari.controller;
 
+import com.florian.ceramicaswari.exception.RecursoNoEncontradoException;
 import com.florian.ceramicaswari.model.Producto;
 import com.florian.ceramicaswari.service.ProductoService;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,9 @@ class ProductoControllerTest {
     @MockitoBean
     private ProductoService productoService;
 
-    // TEST 1: LISTAR PRODUCTOS
+    // =========================================================
+    // TEST 1: LISTAR PRODUCTOS -> 200 OK
+    // =========================================================
     @Test
     void listarProductosDebeRetornar200() throws Exception {
 
@@ -68,7 +71,9 @@ class ProductoControllerTest {
                 );
     }
 
-    // TEST 2: BUSCAR PRODUCTO POR ID
+    // =========================================================
+    // TEST 2: BUSCAR PRODUCTO POR ID -> 200 OK
+    // =========================================================
     @Test
     void buscarProductoPorIdDebeRetornar200() throws Exception {
 
@@ -100,7 +105,9 @@ class ProductoControllerTest {
                 );
     }
 
-    // TEST 3: CREAR PRODUCTO Y COMPROBAR HTTP 201
+    // =========================================================
+    // TEST 3: CREAR PRODUCTO -> 201 CREATED
+    // =========================================================
     @Test
     void crearProductoDebeRetornar201() throws Exception {
 
@@ -117,8 +124,11 @@ class ProductoControllerTest {
                 "Producto utilizado en prueba automática"
         );
 
-        when(productoService.guardarProducto(any(Producto.class)))
-                .thenReturn(productoGuardado);
+        when(
+                productoService.guardarProducto(
+                        any(Producto.class)
+                )
+        ).thenReturn(productoGuardado);
 
         String json = """
                 {
@@ -143,6 +153,72 @@ class ProductoControllerTest {
                 .andExpect(
                         jsonPath("$.nombre")
                                 .value("Producto de prueba")
+                );
+    }
+
+    // =========================================================
+    // TEST 4: PRODUCTO INVALIDO -> 400 BAD REQUEST
+    // =========================================================
+    @Test
+    void crearProductoInvalidoDebeRetornar400() throws Exception {
+
+        String json = """
+                {
+                    "codigoProducto": "",
+                    "nombre": "",
+                    "precioLista": -10.00,
+                    "stockActual": -5,
+                    "descripcionCultural": "Producto inválido"
+                }
+                """;
+
+        mockMvc.perform(
+                        post("/api/productos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(
+                        jsonPath("$.codigoProducto")
+                                .exists()
+                )
+                .andExpect(
+                        jsonPath("$.nombre")
+                                .exists()
+                )
+                .andExpect(
+                        jsonPath("$.precioLista")
+                                .exists()
+                )
+                .andExpect(
+                        jsonPath("$.stockActual")
+                                .exists()
+                );
+    }
+
+    // =========================================================
+    // TEST 5: PRODUCTO NO EXISTE -> 404 NOT FOUND
+    // =========================================================
+    @Test
+    void buscarProductoInexistenteDebeRetornar404()
+            throws Exception {
+
+        when(productoService.obtenerPorId(999))
+                .thenThrow(
+                        new RecursoNoEncontradoException(
+                                "Producto con ID 999 no encontrado"
+                        )
+                );
+
+        mockMvc.perform(
+                        get("/api/productos/999")
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(
+                        jsonPath("$.mensaje")
+                                .value(
+                                        "Producto con ID 999 no encontrado"
+                                )
                 );
     }
 }
