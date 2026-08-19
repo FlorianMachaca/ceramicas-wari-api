@@ -1,0 +1,79 @@
+# ===============================
+# MAVEN
+# ===============================
+target/
+*.class
+
+# Mantener Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# ===============================
+# VARIABLES / CONFIGURACION LOCAL
+# ===============================
+.env
+.env.*
+application-local.properties
+application-dev.properties
+
+# ===============================
+# LOGS
+# ===============================
+*.log
+logs/
+
+# ===============================
+# INTELLIJ IDEA
+# ===============================
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# ===============================
+# ECLIPSE / STS
+# ===============================
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# ===============================
+# VS CODE
+# ===============================
+.vscode/
+
+# ===============================
+# WINDOWS
+# ===============================
+Thumbs.db
+Desktop.ini
+
+# ===============================
+# MACOS
+# ===============================
+.DS_Store
+
+# ===============================
+# ARCHIVOS TEMPORALES
+# ===============================
+*.tmp
+*.temp
+*.swp
+*~
+
+# ===============================
+# BACKUPS / BASES DE DATOS
+# ===============================
+*.bak
+
+# ===============================
+# NO IGNORAR CODIGO FUENTE
+# ===============================
+!src/
+!pom.xml
+!mvnw
+!mvnw.cmd
+!.mvn/
